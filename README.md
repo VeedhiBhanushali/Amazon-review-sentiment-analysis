@@ -1,81 +1,89 @@
 # 📊 Amazon Reviews Sentiment Analysis: Decoding Customer Emotions
 
 ## 🔍 Project Overview
-This project dives deep into the emotional landscape of Amazon fine food reviews, leveraging cutting-edge Natural Language Processing (NLP) techniques to extract meaningful insights. By analyzing the sentiment behind customer feedback, we've uncovered patterns that traditional star ratings alone cannot reveal, providing a goldmine of actionable intelligence for businesses looking to enhance their products, marketing strategies, and customer service.
+This project analyzes the sentiment of Amazon fine food reviews using Natural Language Processing (NLP) techniques. By examining the sentiment behind customer feedback, we can uncover patterns that complement traditional star ratings, providing valuable insights for product improvement, marketing strategies, and customer service.
 
 ## 📈 Dataset & Scope
-- **Source**: Amazon Fine Food Reviews dataset (originally compiled by SNAP, Stanford)
-- **Volume**: Analyzed **568,454** detailed food reviews from Amazon's marketplace
-- **Depth**: Processed over **74 million words** of customer feedback
-- **Dimensions**: Rich feature set including:
+- **Source**: [Amazon Fine Food Reviews dataset on Kaggle](https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews?select=Reviews.csv)
+- **Volume**: Analyzed **568,454** food reviews from Amazon's marketplace
+- **Features**: Rich feature set including:
   - Product identifiers and metadata
-  - User demographics and purchase history
+  - User information
   - Rating scale (1-5 stars) with distribution: 
-    - ⭐ (1-star): 13.3%
-    - ⭐⭐ (2-star): 6.8%
-    - ⭐⭐⭐ (3-star): 10.7%
-    - ⭐⭐⭐⭐ (4-star): 21.5%
-    - ⭐⭐⭐⭐⭐ (5-star): 47.7%
-  - Detailed review text with an average length of 130 words
-  - Helpfulness votes (over 3.1 million votes analyzed)
-- **Temporal Coverage**: Reviews spanning from 2000 to 2012, capturing evolving consumer preferences and product trends
+    - ⭐ (1-star): ~13%
+    - ⭐⭐ (2-star): ~7%
+    - ⭐⭐⭐ (3-star): ~11%
+    - ⭐⭐⭐⭐ (4-star): ~22%
+    - ⭐⭐⭐⭐⭐ (5-star): ~47%
+  - Detailed review text
+  - Helpfulness votes
+- **Temporal Coverage**: Reviews spanning from 2000 to 2012
 
 ## 🧠 Methodology: The Science Behind the Analysis
-This project employs a sophisticated multi-model approach to sentiment analysis, combining the strengths of different techniques to achieve a more nuanced understanding of customer sentiment:
+This project employs a multi-model approach to sentiment analysis:
 
 ### 🔬 Models Implemented
 
 #### 1. **VADER (Valence Aware Dictionary and sEntiment Reasoner)**
-   - **Type**: Rule-based lexicon specifically calibrated for social media content
-   - **Mechanics**: Analyzes text using a dictionary of over 7,500 lexical features with validated valence scores
-   - **Output**: Generates four distinct sentiment scores:
-     - Negative (0-1 scale)
-     - Neutral (0-1 scale)
-     - Positive (0-1 scale)
-     - Compound (-1 to +1 scale, normalized sum of all scores)
+   - **Type**: Rule-based lexicon for sentiment analysis
+   - **Mechanics**: Analyzes text using a dictionary of lexical features with valence scores
+   - **Output**: Generates sentiment scores (negative, neutral, positive, and compound)
    - **Strengths**: 
-     - Lightning-fast processing (analyzed our entire dataset in under 3 hours)
-     - Excellent at detecting explicit sentiment expressions
-     - No training required, making it ideal for rapid deployment
-   - **Performance**: Achieved 74% accuracy when compared to human-labeled sentiment
+     - Fast processing
+     - Good at detecting explicit sentiment expressions
+     - No training required
+   - **Performance**: Provides reliable baseline sentiment analysis
 
 #### 2. **RoBERTa (Roberta-base-sentiment)**
-   - **Type**: State-of-the-art transformer model from cardiffnlp
-   - **Architecture**: 125 million parameters fine-tuned on a massive corpus of social media text
-   - **Mechanics**: Processes text bidirectionally, capturing complex contextual relationships between words
+   - **Type**: Transformer model from cardiffnlp
+   - **Mechanics**: Processes text bidirectionally, capturing contextual relationships
    - **Strengths**:
-     - Understands nuanced language patterns including sarcasm, idioms, and implicit sentiment
-     - Captures long-range dependencies in text
-     - Context-aware analysis that considers the entire review
-   - **Performance**: Achieved 89% accuracy on our validation set, significantly outperforming lexicon-based methods
+     - Understands nuanced language patterns
+     - Captures context-dependent sentiment
+   - **Performance**: Higher accuracy for complex sentiment expressions
 
 #### 3. **DistilBERT**
-   - **Type**: Compressed version of BERT optimized for efficiency
-   - **Architecture**: 66 million parameters (40% smaller than BERT-base)
-   - **Role**: Provided validation and additional perspective on ambiguous reviews
-   - **Performance**: Achieved 85% accuracy while processing reviews 60% faster than full BERT models
+   - **Type**: Compressed version of BERT
+   - **Role**: Provided additional perspective on reviews
+   - **Performance**: Good balance between speed and accuracy
 
 ### 📋 Implementation Process
 1. **Data Preparation**:
-   - Cleaned 568,454 reviews, removing HTML artifacts and standardizing text
-   - Tokenized and normalized text using NLTK and spaCy
-   - Split dataset into 80% training/validation and 20% testing sets
+   - Cleaned reviews, removing HTML artifacts and standardizing text
+   - Tokenized and normalized text
+   - Split dataset for training/validation and testing
 
 2. **Sentiment Extraction**:
    - Applied VADER to generate baseline sentiment scores
-   - Processed reviews through RoBERTa for deep contextual sentiment analysis
-   - Used DistilBERT as a verification mechanism for reviews with ambiguous sentiment
+   - Processed reviews through RoBERTa for contextual sentiment analysis
+   - Used DistilBERT as a verification mechanism
 
 3. **Analysis & Validation**:
-   - Cross-validated results between models to identify consensus and divergence
-   - Manually reviewed 500 sample reviews to verify model accuracy
-   - Performed statistical analysis to correlate sentiment scores with star ratings
+   - Cross-validated results between models
+   - Reviewed sample reviews to verify model accuracy
+   - Analyzed correlation between sentiment scores and star ratings
 
-## 🔎 Key Findings: What the Data Revealed
+## 🔎 Key Findings
 
 ### 📊 Sentiment Distribution & Patterns
-- **Rating-Sentiment Correlation**: Discovered a strong but imperfect correlation (r=0.78) between star ratings and sentiment scores
+- **Rating-Sentiment Correlation**: Found correlation between star ratings and sentiment scores
 - **Sentiment Breakdown by Rating**:
+  | Star Rating | Sentiment Observation |
+  |-------------|------------------------|
+  | ⭐ (1-star)  | Predominantly negative sentiment |
+  | ⭐⭐ (2-star) | Mixed sentiment with significant criticism |
+  | ⭐⭐⭐ (3-star)| Mixed sentiment, containing both praise and criticism |
+  | ⭐⭐⭐⭐ (4-star)| Predominantly positive with minor concerns |
+  | ⭐⭐⭐⭐⭐ (5-star)| Overwhelmingly positive sentiment |
+
+- **Category Insights**: Identified product categories with notably positive or mixed sentiment
+
+### 🏆 Model Performance
+- **RoBERTa**: Better at detecting nuanced sentiment including sarcasm and implicit sentiment
+- **VADER**: More efficient processing while maintaining good accuracy for explicit sentiment
+- **Combined Approach**: Provided more comprehensive sentiment analysis
+
+### 🧩 Sentiment-Rating Misalignments
   | Star Rating | Avg. VADER Compound | Avg. RoBERTa Positive | Key Observation |
   |-------------|---------------------|------------------------|-----------------|
   | ⭐ (1-star)  | -0.63               | 0.12                   | Strong negative sentiment with occasional positive phrases |
