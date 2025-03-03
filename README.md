@@ -67,6 +67,15 @@ This project employs a multi-model approach to sentiment analysis:
 
 ### 📊 Sentiment Distribution & Patterns
 - **Rating-Sentiment Correlation**: Found correlation between star ratings and sentiment scores
+
+- **Sentiment Analysis Visualizations**:
+
+  ![Sentiment Analysis Correlation Matrix](sentiment_correlation_matrix.png)
+  *Figure 1: Correlation matrix showing relationships between VADER and RoBERTa sentiment scores across different ratings*
+
+  ![Sentiment by Rating](sentiment_by_rating.png)
+  *Figure 2: Bar chart showing positive, neutral, and negative sentiment distribution across star ratings*
+
 - **Sentiment Breakdown by Rating**:
   | Star Rating | Sentiment Observation |
   |-------------|------------------------|
